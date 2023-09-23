@@ -21,8 +21,8 @@ export default function App() {
 
   // Remove Guest Button function
   const removeGuest = (guestId) => {
-    // Remove Guest
-    const newList = guestList.filter();
+    // Remove Guest and hold the updated guest list after removing the guest
+    const newList = guestList.filter((_, i) => i !== guestId);
     // Update Guest List
     setGuestList(newList);
   };

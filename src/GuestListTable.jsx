@@ -40,7 +40,7 @@ export default function GuestList(props) {
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-1 rounded-full font-bold content-center"
                   aria-label="remove"
-                  onClick={props.removeGuest}
+                  onClick={() => props.removeGuest(index)}
                 >
                   Remove
                 </button>

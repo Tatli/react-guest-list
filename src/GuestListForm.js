@@ -61,10 +61,22 @@ export default function GuestListForm(props) {
             <br />
 
             <button
-              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded"
+              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
               onClick={props.addGuest}
             >
               Add Guest
+            </button>
+            <button
+              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
+              onClick={props.getAllGuests}
+            >
+              Get Guests
+            </button>
+            <button
+              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
+              onClick={props.createGuest}
+            >
+              Create Guest
             </button>
           </div>
         </form>

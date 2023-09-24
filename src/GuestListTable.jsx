@@ -38,7 +38,7 @@ export default function GuestList(props) {
               </td>
               <td className="border px-4 py-1">
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-1 rounded-full font-bold content-center"
+                  className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
                   aria-label="remove"
                   onClick={() => props.removeGuest(index)}
                 >

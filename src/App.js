@@ -29,7 +29,7 @@ export default function App() {
 
   const addGuest = (e) => {
     // Check if pressed key was Enter?
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.button === 0) {
       // Confirm Enter key
       console.log(`${e.key} pressed. Creating new guest`);
       // set newGuest Objects values

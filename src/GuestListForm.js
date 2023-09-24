@@ -53,11 +53,19 @@ export default function GuestListForm(props) {
                 aria-label="attending"
                 className="box-border m-1"
                 type="checkbox"
-                value={props.isAttending}
+                checked={props.isAttending}
                 onChange={props.handleIsAttendingChange}
               />
             </label>
-            <button>Add Guest</button>
+
+            <br />
+
+            <button
+              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded"
+              onClick={props.addGuest}
+            >
+              Add Guest
+            </button>
           </div>
         </form>
       </div>

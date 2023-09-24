@@ -16,7 +16,7 @@ export default function GuestListForm(props) {
     // The first name input needs to have a related label containing `First name`
     <div className="m-5">
       <h1 className="mb-2.5 text-3xl font-bold underline decoration-blue-500">
-        Guest List
+        Death Note
       </h1>
       <div data-test-id="guest">
         <form onSubmit={(e) => e.preventDefault()}>
@@ -49,9 +49,9 @@ export default function GuestListForm(props) {
             <label>
               Attending:
               <input
+                className="box-border m-1 focus:outline-blue-700"
                 label="Attending"
                 aria-label="attending"
-                className="box-border m-1"
                 type="checkbox"
                 checked={props.isAttending}
                 onChange={props.handleIsAttendingChange}
@@ -61,19 +61,19 @@ export default function GuestListForm(props) {
             <br />
 
             <button
-              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
+              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.addGuest}
             >
               Add Guest
             </button>
             <button
-              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
+              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.getAllGuests}
             >
               Get Guests
             </button>
             <button
-              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1"
+              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.createGuest}
             >
               Create Guest

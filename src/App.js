@@ -11,6 +11,17 @@ export default function App() {
 
   const baseUrl = 'http://localhost:4000/';
 
+  // # Input Field and Check Box event handlers
+  const handleFirstNameChange = (e) => {
+    setFirstName(e.target.value);
+  };
+  const handleLastNameChange = (e) => {
+    setLastName(e.target.value);
+  };
+  const handleIsAttendingChange = (e) => {
+    setIsAttending(e.target.checked);
+  };
+
   async function deleteGuestFromAPI(guestIdParameter) {
     const response = await fetch(`${baseUrl}guests/${guestIdParameter}`, {
       method: 'DELETE',
@@ -79,14 +90,17 @@ export default function App() {
         lastName: lastName,
       }),
     });
+    // Newly created guest response from API
     const createdGuest = await response.json();
+    // Add the newly created guest to guestList
     setGuestList([...guestList, createdGuest]);
-    console.log(createdGuest);
-    console.log(guestList);
+    console.log(
+      `createGuest(): id: ${createdGuest.id} firstName: ${createdGuest.firstName} lastName: ${createdGuest.lastName} isAttending: ${createdGuest.isAttending}`,
+    );
     // Reset form
     setFirstName('');
     setLastName('');
-    setIsAttending(false);
+    // setIsAttending(false);
   }
 
   /*
@@ -117,17 +131,6 @@ export default function App() {
     }
   };
 */
-
-  // # Input Field and Check Box event handlers
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-  };
-  const handleIsAttendingChange = (e) => {
-    setIsAttending(e.target.checked);
-  };
 
   return (
     <>

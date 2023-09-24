@@ -25,10 +25,10 @@ export default function GuestList(props) {
           </tr>
         </thead>
         <tbody>
-          {props.guestList.map((guest, id) => (
+          {props.guestList.map((guest) => (
             <tr
               className="hover:bg-gray-100 focus:bg-gray-200"
-              key={`guest-${guest[id]}`}
+              key={`guest-${guest.id}`}
             >
               <td className="border bg-gray-50 px-4 py-1">{guest.id}</td>
               <td className="border px-4 py-1">{guest.firstName}</td>

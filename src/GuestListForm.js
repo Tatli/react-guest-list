@@ -60,14 +60,14 @@ export default function GuestListForm(props) {
 
             <br />
 
-            <button
+            {/* <button
               className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.addGuest}
             >
               Add Guest
-            </button>
+            </button> */}
             <button
-              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
+              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.getAllGuests}
             >
               Get Guests

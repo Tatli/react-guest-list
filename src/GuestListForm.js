@@ -9,7 +9,7 @@ export default function GuestListForm(props) {
   //   setGuestList([...guestList, newGuest]);
   // }, [guestList, newGuest]);
 
-  console.log(`${props.firstName} ${props.lastName} ${props.isAttending}`);
+  console.log(`${props.firstName} ${props.lastName}`);
 
   return (
     // Adding a guest using separate first name and last name fields
@@ -46,34 +46,20 @@ export default function GuestListForm(props) {
 
             <br />
 
-            <label>
-              Attending:
-              <input
-                className="box-border m-1 focus:outline-blue-700"
-                label="Attending"
-                aria-label="attending"
-                type="checkbox"
-                checked={props.isAttending}
-                onChange={props.handleIsAttendingChange}
-              />
-            </label>
-
-            <br />
-
             {/* <button
               className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.addGuest}
             >
               Add Guest
             </button> */}
-            <button
+            {/* <button
               className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.getAllGuests}
             >
               Get Guests
-            </button>
+            </button> */}
             <button
-              className="box-border mt-1 ml-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
+              className="box-border mt-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-700 hover-border-blue-500 rounded ring-1 focus:outline-blue-700"
               onClick={props.createGuest}
             >
               Create Guest

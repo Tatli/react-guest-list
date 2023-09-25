@@ -7,7 +7,7 @@ export default function App() {
   const [guestList, setGuestList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [isAttending, setIsAttending] = useState(false);
+  // const []
 
   const baseUrl = 'http://localhost:4000/';
 
@@ -17,9 +17,6 @@ export default function App() {
   };
   const handleLastNameChange = (e) => {
     setLastName(e.target.value);
-  };
-  const handleIsAttendingChange = (e) => {
-    setIsAttending(e.target.checked);
   };
 
   async function deleteGuestFromAPI(guestIdParameter) {
@@ -52,29 +49,35 @@ export default function App() {
     }
   };
 
-  // # API - Initial fetch
-  useEffect(() => {
-    async function initialFetchAllGuests() {
-      const response = await fetch(`${baseUrl}guests`);
-      const fetchedGuests = await response.json();
-      setGuestList(fetchedGuests); // Set fetched guests as the guest list
-    }
-    initialFetchAllGuests().catch((error) => console.error(error));
-  }, []); // []: Trigger only on first render
-
-  // # API - Get All Guests
-  async function getAllGuests() {
+  async function initialFetchAllGuests() {
     const response = await fetch(`${baseUrl}guests`);
     const fetchedGuests = await response.json();
     setGuestList(fetchedGuests); // Set fetched guests as the guest list
-    // handleTableContent(fetchedGuests);
-    console.log(`Fetching all guests from API:`);
-    guestList.map((guest, index) =>
-      console.log(
-        `guest#${index}: ${guest.firstName}, ${guest.lastName}, ${guest.attending}`,
-      ),
-    );
   }
+
+  // # API - Initial fetch
+  useEffect(() => {
+    // async function initialFetchAllGuests() {
+    //   const response = await fetch(`${baseUrl}guests`);
+    //   const fetchedGuests = await response.json();
+    //   setGuestList(fetchedGuests); // Set fetched guests as the guest list
+    // }
+    initialFetchAllGuests().catch((error) => console.error(error));
+  }, []); // []: Trigger only on first render
+
+  // // # API - Get All Guests
+  // async function getAllGuests() {
+  //   const response = await fetch(`${baseUrl}guests`);
+  //   const fetchedGuests = await response.json();
+  //   setGuestList(fetchedGuests); // Set fetched guests as the guest list
+  //   // handleTableContent(fetchedGuests);
+  //   console.log(`Fetching all guests from API:`);
+  //   guestList.map((guest, index) =>
+  //     console.log(
+  //       `guest#${index}: ${guest.firstName}, ${guest.lastName}, ${guest.attending}`,
+  //     ),
+  //   );
+  // }
 
   // # API - Create Guest
   async function createGuest() {
@@ -84,8 +87,6 @@ export default function App() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: guestId,
-        attending: isAttending,
         firstName: firstName,
         lastName: lastName,
       }),
@@ -95,13 +96,57 @@ export default function App() {
     // Add the newly created guest to guestList
     setGuestList([...guestList, createdGuest]);
     console.log(
-      `createGuest(): id: ${createdGuest.id} firstName: ${createdGuest.firstName} lastName: ${createdGuest.lastName} isAttending: ${createdGuest.isAttending}`,
+      `createGuest(): id: ${createdGuest.id} firstName: ${createdGuest.firstName} lastName: ${createdGuest.lastName} isAttending: ${createdGuest.attending}`,
     );
     // Reset form
     setFirstName('');
     setLastName('');
     // setIsAttending(false);
   }
+
+  // # API - Update Guest
+  async function updateGuest(guestIdParameter, attendingState) {
+    const response = await fetch(`${baseUrl}guests/${guestIdParameter}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ attending: attendingState }),
+    });
+    if (response.ok) {
+      const updatedGuest = await response.json();
+      console.log(
+        `updatedGuest.attending inside updateGuest(): ${updatedGuest.attending}`,
+      );
+      // finde gast mit guestIdParameter in guestList
+      // .filter erstellt immer ein neues Array, so wie map, daher const {variablenname davor}
+      const filteredGuest = guestList.filter((guest) => {
+        // nimm jeden Gast, außer den, den ich geupdated habe
+        return guest.id !== updatedGuest.id;
+      });
+      setGuestList([...guestList], filteredGuest);
+      // setze attending von updatedGuest zu guest in guestList
+      console.log('Updated guest');
+      initialFetchAllGuests().catch((error) => console.error(error));
+    } else {
+      console.error(`Response was not okay`);
+    }
+  }
+
+  // // # Update Guest locally
+  // const updateGuest = async (guestIdParameter) => {
+  //   // Remove Guest with given guestId
+  //   const updatedGuest = await updateGuestFromAPI(guestIdParameter);
+
+  //   if (updatedGuest) {
+  //     // If guest was deleted from API update local state
+
+  //     // Update Guest List
+  //     setGuestList(updatedList);
+  //   } else {
+  //     console.error('Failed to delete guest from API');
+  //   }
+  // };
 
   /*
   // # Add Guest without API
@@ -137,16 +182,17 @@ export default function App() {
       <GuestListForm
         firstName={firstName}
         lastName={lastName}
-        isAttending={isAttending}
         guestList={guestList}
         handleFirstNameChange={handleFirstNameChange}
         handleLastNameChange={handleLastNameChange}
-        handleIsAttendingChange={handleIsAttendingChange}
         // addGuest={addGuest} // "Old" way to add a guest without API
-        getAllGuests={getAllGuests}
         createGuest={createGuest}
       />
-      <GuestListTable guestList={guestList} removeGuest={removeGuest} />
+      <GuestListTable
+        guestList={guestList}
+        removeGuest={removeGuest}
+        updateGuest={updateGuest}
+      />
     </>
   );
 }

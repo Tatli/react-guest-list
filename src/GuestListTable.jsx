@@ -34,7 +34,23 @@ export default function GuestList(props) {
               <td className="border px-4 py-1">{guest.firstName}</td>
               <td className="border px-4 py-1">{guest.lastName}</td>
               <td className="border px-4 py-1">
-                {guest.isAttending ? 'Yes' : 'No'}
+                <label>
+                  Attending:
+                  <input
+                    className="box-border m-1 focus:outline-blue-700"
+                    label="Attending"
+                    aria-label="attending"
+                    type="checkbox"
+                    checked={guest.attending}
+                    onChange={(e) => {
+                      props.updateGuest(guest.id, e.currentTarget.checked);
+                      console.log(
+                        `guest.attending inside of map: ${guest.attending}`,
+                      );
+                    }}
+                  />
+                </label>
+                {guest.attending ? 'Yes' : 'No'}
               </td>
               <td className="border px-4 py-1">
                 <button

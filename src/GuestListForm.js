@@ -21,7 +21,7 @@ export default function GuestListForm(props) {
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="">
             <label>
-              First Name:
+              First Name
               <input
                 label="First Name:"
                 className="box-border m-1 border-solid border-2 rounded-lg  border-blue-300 focus:outline-none focus:ring-0  focus:border-blue-500 focus:border-b-blue-700"
@@ -33,7 +33,7 @@ export default function GuestListForm(props) {
             <br />
 
             <label>
-              Last Name:
+              Last Name
               <input
                 label="Last Name:"
                 className="box-border m-1 border-solid border-2 rounded-lg  border-blue-300 focus:outline-none focus:ring-0  focus:border-blue-500 focus:border-b-blue-700"

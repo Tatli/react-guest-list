@@ -7,6 +7,7 @@ export default function App() {
   const [guestList, setGuestList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   // const []
 
   const baseUrl = 'http://localhost:4000/';
@@ -18,6 +19,50 @@ export default function App() {
   const handleLastNameChange = (e) => {
     setLastName(e.target.value);
   };
+
+  // # API - Fetch all Guests (used for initial and attendance update rendering)
+  async function fetchAllGuests() {
+    const response = await fetch(`${baseUrl}guests`);
+    const fetchedGuests = await response.json();
+    setGuestList(fetchedGuests); // Set fetched guests as the guest list
+  }
+
+  // # API - Initial fetch
+  useEffect(() => {
+    fetchAllGuests().catch((error) => console.error(error));
+    setIsLoading(false);
+  }, []); // []: Trigger only on first render
+
+  // # API - Create Guest
+  async function createGuest() {
+    const response = await fetch(`${baseUrl}guests`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+      }),
+    });
+    // Newly created guest response from API
+    const createdGuest = await response.json();
+    // Add the newly created guest to guestList
+    setGuestList([...guestList, createdGuest]);
+    console.log(
+      `createGuest(): id: ${createdGuest.id} firstName: ${createdGuest.firstName} lastName: ${createdGuest.lastName} isAttending: ${createdGuest.attending}`,
+    );
+    // Reset form
+    setFirstName('');
+    setLastName('');
+    // setIsAttending(false);
+  }
+
+  // useEffect(() => {
+  //   if (guestList.length > 0) {
+  //     setIsLoading(false);
+  //   }
+  // }, [guestList]);
 
   async function deleteGuestFromAPI(guestIdParameter) {
     const response = await fetch(`${baseUrl}guests/${guestIdParameter}`, {
@@ -49,61 +94,6 @@ export default function App() {
     }
   };
 
-  async function initialFetchAllGuests() {
-    const response = await fetch(`${baseUrl}guests`);
-    const fetchedGuests = await response.json();
-    setGuestList(fetchedGuests); // Set fetched guests as the guest list
-  }
-
-  // # API - Initial fetch
-  useEffect(() => {
-    // async function initialFetchAllGuests() {
-    //   const response = await fetch(`${baseUrl}guests`);
-    //   const fetchedGuests = await response.json();
-    //   setGuestList(fetchedGuests); // Set fetched guests as the guest list
-    // }
-    initialFetchAllGuests().catch((error) => console.error(error));
-  }, []); // []: Trigger only on first render
-
-  // // # API - Get All Guests
-  // async function getAllGuests() {
-  //   const response = await fetch(`${baseUrl}guests`);
-  //   const fetchedGuests = await response.json();
-  //   setGuestList(fetchedGuests); // Set fetched guests as the guest list
-  //   // handleTableContent(fetchedGuests);
-  //   console.log(`Fetching all guests from API:`);
-  //   guestList.map((guest, index) =>
-  //     console.log(
-  //       `guest#${index}: ${guest.firstName}, ${guest.lastName}, ${guest.attending}`,
-  //     ),
-  //   );
-  // }
-
-  // # API - Create Guest
-  async function createGuest() {
-    const response = await fetch(`${baseUrl}guests`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-      }),
-    });
-    // Newly created guest response from API
-    const createdGuest = await response.json();
-    // Add the newly created guest to guestList
-    setGuestList([...guestList, createdGuest]);
-    console.log(
-      `createGuest(): id: ${createdGuest.id} firstName: ${createdGuest.firstName} lastName: ${createdGuest.lastName} isAttending: ${createdGuest.attending}`,
-    );
-    // Reset form
-    setFirstName('');
-    setLastName('');
-    // setIsAttending(false);
-  }
-
   // # API - Update Guest
   async function updateGuest(guestIdParameter, attendingState) {
     const response = await fetch(`${baseUrl}guests/${guestIdParameter}`, {
@@ -118,64 +108,27 @@ export default function App() {
       console.log(
         `updatedGuest.attending inside updateGuest(): ${updatedGuest.attending}`,
       );
-      // finde gast mit guestIdParameter in guestList
-      // .filter erstellt immer ein neues Array, so wie map, daher const {variablenname davor}
+      // Find Guest with guestIdParameter in guestList
+      // .filter always creates a new array, just like map, hence we need to assign it to a variable
       const filteredGuest = guestList.filter((guest) => {
-        // nimm jeden Gast, außer den, den ich geupdated habe
+        // Pick every Guest, except updated one
         return guest.id !== updatedGuest.id;
       });
       setGuestList([...guestList], filteredGuest);
-      // setze attending von updatedGuest zu guest in guestList
+      // Set attending of updatedGuest to guest in guestList
       console.log('Updated guest');
-      initialFetchAllGuests().catch((error) => console.error(error));
+      // I could possible re-do this by setting isAttending in here and triggering a re-render in a useEffect (what would be the difference though since I'm executing it here anyway)
+      fetchAllGuests().catch((error) => console.error(error));
     } else {
       console.error(`Response was not okay`);
     }
   }
 
-  // // # Update Guest locally
-  // const updateGuest = async (guestIdParameter) => {
-  //   // Remove Guest with given guestId
-  //   const updatedGuest = await updateGuestFromAPI(guestIdParameter);
-
-  //   if (updatedGuest) {
-  //     // If guest was deleted from API update local state
-
-  //     // Update Guest List
-  //     setGuestList(updatedList);
-  //   } else {
-  //     console.error('Failed to delete guest from API');
-  //   }
-  // };
-
-  /*
-  // # Add Guest without API
-  const addGuest = (e) => {
-    // Check if pressed key was Enter?
-    if (e.key === 'Enter' || e.button === 0) {
-      // Confirm Enter key
-      console.log(`${e.key} pressed. Creating new guest`);
-      // set newGuest Object values
-      const newGuest = {
-        firstName: firstName,
-        lastName: lastName,
-        isAttending: isAttending,
-      };
-      // Log newGuests's firstName, lastName, isAttending status
-      console.log(
-        `New guest within addGuest(): firstName: ${newGuest.firstName}, lastName: ${newGuest.lastName}, isAttending; ${isAttending}`,
-      );
-      // Add newGuest to guestList
-      setGuestList([...guestList, newGuest]);
-      // Log guestList
-      console.log(guestList);
-      // Reset form
-      setFirstName('');
-      setLastName('');
-      setIsAttending(false);
-    }
-  };
-*/
+  // Early return is isLoadig is true
+  if (isLoading) {
+    console.log('Loading...');
+    return 'Loading...';
+  }
 
   return (
     <>

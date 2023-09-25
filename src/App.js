@@ -3,14 +3,14 @@ import GuestListForm from './GuestListForm';
 import GuestListTable from './GuestListTable';
 
 export default function App() {
-  const [guestId, setGuestId] = useState();
   const [guestList, setGuestList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   // const []
 
-  const baseUrl = 'http://localhost:4000/';
+  const baseUrl =
+    'https://express-guest-list-api-memory-data-store--tatli1.repl.co/';
 
   // # Input Field and Check Box event handlers
   const handleFirstNameChange = (e) => {
@@ -124,7 +124,7 @@ export default function App() {
     }
   }
 
-  // Early return is isLoadig is true
+  // Early return is isLoading is true
   if (isLoading) {
     console.log('Loading...');
     return 'Loading...';

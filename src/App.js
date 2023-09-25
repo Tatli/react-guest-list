@@ -25,12 +25,13 @@ export default function App() {
     const response = await fetch(`${baseUrl}guests`);
     const fetchedGuests = await response.json();
     setGuestList(fetchedGuests); // Set fetched guests as the guest list
+    setIsLoading(false);
   }
+  // Early return is isLoading is true
 
   // # API - Initial fetch
   useEffect(() => {
     fetchAllGuests().catch((error) => console.error(error));
-    setIsLoading(false);
   }, []); // []: Trigger only on first render
 
   // # API - Create Guest
@@ -57,12 +58,6 @@ export default function App() {
     setLastName('');
     // setIsAttending(false);
   }
-
-  // useEffect(() => {
-  //   if (guestList.length > 0) {
-  //     setIsLoading(false);
-  //   }
-  // }, [guestList]);
 
   async function deleteGuestFromAPI(guestIdParameter) {
     const response = await fetch(`${baseUrl}guests/${guestIdParameter}`, {
@@ -124,7 +119,6 @@ export default function App() {
     }
   }
 
-  // Early return is isLoading is true
   if (isLoading) {
     console.log('Loading...');
     return 'Loading...';

@@ -23,7 +23,7 @@ export default function GuestListForm(props) {
             <label>
               First Name
               <input
-                label="First Name:"
+                label="First Name"
                 className="box-border m-1 border-solid border-2 rounded-lg  border-blue-300 focus:outline-none focus:ring-0  focus:border-blue-500 focus:border-b-blue-700"
                 value={props.firstName}
                 onChange={props.handleFirstNameChange}
@@ -35,7 +35,7 @@ export default function GuestListForm(props) {
             <label>
               Last Name
               <input
-                label="Last Name:"
+                label="Last Name"
                 className="box-border m-1 border-solid border-2 rounded-lg  border-blue-300 focus:outline-none focus:ring-0  focus:border-blue-500 focus:border-b-blue-700"
                 value={props.lastName}
                 onChange={props.handleLastNameChange}
